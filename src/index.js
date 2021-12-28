@@ -6,7 +6,8 @@ import {
   HashRouter,
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 import App from "./App";
 import About from "./pages/About";
@@ -15,7 +16,8 @@ import Page1 from "./pages/Page1";
 import Page2 from "./pages/Page2";
 import Page3 from "./pages/Page3";
 
-/* move this to own file later.. */
+/* The reducer, which keeps track of global state */
+/* 'action' decides what to do, and you return the current state */
 const countReducer = function (state = 0, action) {
   console.log("countReducer! action=" + action.type);
   switch (action.type) {
@@ -33,6 +35,8 @@ const countReducer = function (state = 0, action) {
 let store = createStore(countReducer);
 
 const rootElement = document.getElementById("root");
+
+/* React Router keeps track of which page is "current" */
 render(
   <Provider store={store}>
     <HashRouter>
@@ -44,6 +48,7 @@ render(
           <Route path="page2" element={<Page2 />} />
           <Route path="page3" element={<Page3 />} />
 
+          /* A catch-all for missing routes */
           <Route
             path="*"
             element={
@@ -52,7 +57,6 @@ render(
               </main>
             }
           />
-
         </Route>
       </Routes>
     </HashRouter>
